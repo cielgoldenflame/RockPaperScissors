@@ -48,3 +48,5 @@ while($Global:gameon -eq $true) {
            }
      }
 }
+
+Write-Host "Thanks For Playing`nChris Lichner 2020"
