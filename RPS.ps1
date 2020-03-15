@@ -1,34 +1,11 @@
-<#
-Plan 
-    computer var stores options for computer
-    function for computer choose
-        get-random
-    read-host = var
-    switches?
-        if & elseif
-#>
-
-$global:choices = 'rock','paper','scissors'
+$global:choices = 'Rock','Paper','Scissors'
 $Global:user = $null
 $Global:computer = $null
 $Global:gameon = $true
+$Global:ua = $null
 
 function Computer {
   $Global:computer = Get-Random -InputObject $global:choices
-}
-function User {
-    Clear-Host
-    $Global:user = Read-Host "Choose your weapon`n(R)ock`n(P)aper`n(S)cissors"
-    if (($Global:user -ne 'r') -and ($Global:user -ne 'p') -and ($Global:user -ne 's')) {
-       Clear-Host
-       $Global:gameon = $false 
-    }else {
-        switch ($Global:user) {
-           'r' {$Global:user = 'rock'}
-           'p' {$Global:user = 'paper'}
-           's' {$Global:user = 'scissors'}
-        }
-    }
 }
 
 function Comparison {
@@ -49,12 +26,25 @@ function Comparison {
    }
 }
 
-User
-Computer
-if($Global:gameon -eq $true) {
-    Clear-Host
-    Write-Host "$Global:user vs $Global:computer"
-    Comparison
-}elseif ($Global:gameon -eq $false) {
-    "You typed $Global:user"
+while($Global:gameon -eq $true) {
+     Clear-Host
+     Computer
+     $Global:user = Read-Host "Choose your weapon`n(R)ock`n(P)aper`n(S)cissors"
+     if (($Global:user -ne 'r') -and ($Global:user -ne 'p') -and ($Global:user -ne 's')) {
+        Clear-Host
+     }else {
+           switch ($Global:user) {
+            'r' {$Global:user = 'Rock'}
+            'p' {$Global:user = 'Paper'}
+            's' {$Global:user = 'Scissors'}
+           }
+           Clear-Host
+           Write-Host "$Global:user vs $Global:computer"
+           Comparison
+           $Global:ua = Read-Host "Play Again? Y/N"
+           switch ($Global:ua) {
+                "Y" {$Global:gameon = $true}
+                "N" {$Global:gameon = $false}
+           }
+     }
 }
